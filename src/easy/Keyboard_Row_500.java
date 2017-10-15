@@ -10,6 +10,12 @@ import java.util.stream.Stream;
  * @Modified_by:
  */
 public class Keyboard_Row_500 {
+    /**
+     * 和我想法一样，但是写法要聪明不少，把部分费力的功夫用循环和一些已有的库函数来实现了，还有最后的toArray方法，
+     * 可以将List转成想要类型的数组，值得学习
+     * @param words
+     * @return
+     */
     public static String[] findWords(String[] words) {
         String[] strs = {"QWERTYUIOP","ASDFGHJKL","ZXCVBNM"};
         Map<Character, Integer> map = new HashMap<>();
@@ -41,7 +47,11 @@ public class Keyboard_Row_500 {
  */
 
 /*
-
+        自己想出来的写法，一开始把所有的字幕全部添加到一个哈希表里，
+        在键盘上是同一行的具有相同的值，所以每次保存单词的第一个字母的
+        在哈希表中对应的值，然后把剩余的字母扫描一遍，看他们对应的值是否一致
+        如果一致则添加到列表中，然后转换成数组返回，虽然只打败了30%多，但比使用
+        Stream API的装逼写法快的多
         HashMap<Character, Integer> map = new HashMap<>();
         map.put(new Character('q'), new Integer(1));
         map.put(new Character('w'), new Integer(1));
