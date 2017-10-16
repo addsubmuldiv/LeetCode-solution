@@ -6,6 +6,18 @@ package easy;
  * @Date: Created in 0:38 2017/10/17
  * @Modified_by:
  */
+
+/*
+Write a function that takes a string as input and returns the string reversed.
+
+Example:
+Given s = "hello", return "olleh".
+ */
+
+/**
+ * 直接转成字符数组反过来就完了，时间复杂度O(n)
+ */
+
 public class Reverse_String_344 {
     public String reverseString(String s) {
         char[] a=s.toCharArray();
