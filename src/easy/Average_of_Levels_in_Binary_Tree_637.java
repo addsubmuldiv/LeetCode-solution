@@ -1,7 +1,9 @@
 package easy;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @Author: Lighters_c
@@ -34,7 +36,7 @@ public class Average_of_Levels_in_Binary_Tree_637 {
         TreeNode(int x) { val = x; }
     }
 
-    public List<Double> averageOfLevels(TreeNode root) {
+    public List<Double> averageOfLevels_DFS(TreeNode root) {
         ArrayList<Integer> count=new ArrayList<>();
         ArrayList<Double> res=new ArrayList<>();
         if(root==null) {
@@ -68,5 +70,35 @@ public class Average_of_Levels_in_Binary_Tree_637 {
         }
         average(t.left,i+1,sum,count);
         average(t.right,i+1,sum,count);
+    }
+
+    /**
+     * 此题的BFS解法，使用两个队列，一开始先把根节点加入到队列中，通过判断队列非空作为控制循环条件，下一层的节点用temp
+     * 这个队列来存储，在循环快完的时候把queue再设置为temp，这样如果新一层都是null，temp就为空，queue也就为空，
+     * 就能退出循环了，每一层的数字累加到sum里，然后用count来累计节点个数。每层循环快完，把sum/count就得到那一层的均值
+     *
+     * @param root
+     * @return
+     */
+    public List<Double> averageOfLevels_BFS(TreeNode root) {
+        List<Double> res=new ArrayList<>();
+        Queue<TreeNode> queue=new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty()) {
+            long sum=0,count=0;             //sum和count的值在上次循环使用完以后要重新初始化为0
+            Queue<TreeNode> temp=new LinkedList<>();
+            while(!queue.isEmpty()) {
+                TreeNode n=queue.remove();  //每次从队列里面取出一个节点，把它的值加到sum里面，累计count，
+                sum+=n.val;                 //再看它的左右子节点是否为空，不为空就加到temp中
+                count++;                    //对queue里面的每一个节点重复上面两行操作，queue里的节点每次都是一层的节点
+                if(n.left!=null)
+                    temp.add(n.left);
+                if(n.right!=null)
+                    temp.add(n.right);
+            }
+            queue=temp;
+            res.add(sum*1.0/count);
+        }
+        return res;
     }
 }
